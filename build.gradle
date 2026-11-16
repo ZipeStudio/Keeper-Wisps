@@ -1,0 +1,47 @@
+plugins {
+	id "net.lopymine.mossy-plugin-core" version "$mossy_plugin_version"
+}
+
+mossyDependencies {
+	minecraft = stonecutter.current.project.substring(stonecutter.current.project.indexOf("-") + 1)
+	lombok = prop("base.lombok_version")
+
+	fabricApi = prop("build.fabric_api")
+	fabricLoader = prop("build.fabric_loader")
+
+	forge = prop("build.forge")
+
+	neoForge = prop("build.neoforge")
+	parchment = prop("build.parchment")
+
+	additional {
+		// TIP: Don't use modImplementation, use mossyImplementation and etc.
+		override("mossyCompileOnly", "curios")
+		override("mossyCompileOnly", "trinkets")
+		override("mossyCompileOnly", "accessories")
+	}
+}
+
+if (stonecutter.current.project.startsWith("fabric") && prop("dep.trinkets") != "unknown") {
+	repositories {
+		maven {
+			name "Ladysnake"
+			url "https://maven.ladysnake.org/releases"
+		}
+	}
+	dependencies {
+		if (stonecutter.current.version.toString() == "1.20.1") {
+			mossyCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.2"
+		} else {
+			mossyCompileOnly "org.ladysnake.cardinal-components-api:cardinal-components-base:6.1.2"
+		}
+	}
+}
+
+mossyResources {
+	//expandFiles = ["file pattern"]
+}
+
+String prop(String key) {
+	return findProperty(key).toString()
+}

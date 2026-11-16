@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "me.zipestudio.keeperwisps.mixin",
+	"refmap": "${mod_id}.refmap.json",
+	"compatibilityLevel": "JAVA_${java}",
+	"mixins": [
+		"LivingEntityMixin",
+		"ServerLevelMixin"
+	],
+	"client": [
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

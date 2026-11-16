@@ -1,0 +1,9 @@
+{
+	"entity.${mod_id}.wisp": "Висп",
+	"modmenu.descriptionTranslation.${mod_id}": "Милые создания, что стерегут ваши вещи и опыт после смерти.",
+	"subtitles.${mod_id}.entity.wisp.ambient": "Висп напевает",
+	"subtitles.${mod_id}.entity.wisp.eye_contact": "Висп замечает вас",
+	"subtitles.${mod_id}.entity.wisp.retrieve": "Висп отдаёт вещи",
+	"subtitles.${mod_id}.entity.wisp.death": "Висп растворяется",
+	"subtitles.${mod_id}.entity.wisp.appear": "Появляются виспы"
+}

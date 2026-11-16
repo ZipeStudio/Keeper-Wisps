@@ -1,0 +1,9 @@
+{
+	"entity.${mod_id}.wisp": "Wisp",
+	"modmenu.descriptionTranslation.${mod_id}": "${mod_description}",
+	"subtitles.${mod_id}.entity.wisp.ambient": "Wisp hums",
+	"subtitles.${mod_id}.entity.wisp.eye_contact": "Wisp notices you",
+	"subtitles.${mod_id}.entity.wisp.retrieve": "Wisp gives items",
+	"subtitles.${mod_id}.entity.wisp.death": "Wisp fades",
+	"subtitles.${mod_id}.entity.wisp.appear": "Wisps appear"
+}

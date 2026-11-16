@@ -1,0 +1,122 @@
+{
+	"entity.wisp.ambient": {
+		"sounds": [
+			{
+				"name": "keeper_wisps:ambient1",
+				"volume": 0.16,
+				"pitch": 1.0
+			},
+			{
+				"name": "keeper_wisps:ambient2",
+				"volume": 0.16,
+				"pitch": 1.0
+			},
+			{
+				"name": "keeper_wisps:ambient3",
+				"volume": 0.16,
+				"pitch": 1.0
+			}
+		],
+		"subtitle": "subtitles.keeper_wisps.entity.wisp.ambient"
+	},
+	"entity.wisp.ambient_empty": {
+		"sounds": [
+			{
+				"name": "keeper_wisps:ambient1",
+				"volume": 0.14,
+				"pitch": 0.9
+			},
+			{
+				"name": "keeper_wisps:ambient2",
+				"volume": 0.14,
+				"pitch": 0.9
+			},
+			{
+				"name": "keeper_wisps:ambient3",
+				"volume": 0.14,
+				"pitch": 0.9
+			}
+		],
+		"subtitle": "subtitles.keeper_wisps.entity.wisp.ambient"
+	},
+	"entity.wisp.eye_contact": {
+		"sounds": [
+			{
+				"name": "keeper_wisps:eye_contact1",
+				"volume": 0.45,
+				"pitch": 1.0
+			},
+			{
+				"name": "keeper_wisps:eye_contact2",
+				"volume": 0.45,
+				"pitch": 1.0
+			},
+			{
+				"name": "keeper_wisps:eye_contact3",
+				"volume": 0.45,
+				"pitch": 1.0
+			}
+		],
+		"subtitle": "subtitles.keeper_wisps.entity.wisp.eye_contact"
+	},
+	"entity.wisp.retrieve": {
+		"sounds": [
+			{
+				"name": "mob/allay/item_taken1",
+				"volume": 0.39,
+				"pitch": 0.9
+			},
+			{
+				"name": "mob/allay/item_taken2",
+				"volume": 0.39,
+				"pitch": 0.9
+			},
+			{
+				"name": "mob/allay/item_taken3",
+				"volume": 0.39,
+				"pitch": 0.9
+			},
+			{
+				"name": "mob/allay/item_taken4",
+				"volume": 0.39,
+				"pitch": 0.9
+			}
+		],
+		"subtitle": "subtitles.keeper_wisps.entity.wisp.retrieve"
+	},
+	"entity.wisp.death": {
+		"sounds": [
+			{
+				"name": "block/amethyst_cluster/break1",
+				"volume": 1.0,
+				"pitch": 1.15
+			},
+			{
+				"name": "block/amethyst_cluster/break2",
+				"volume": 1.0,
+				"pitch": 1.15
+			},
+			{
+				"name": "block/amethyst_cluster/break3",
+				"volume": 1.0,
+				"pitch": 1.15
+			},
+			{
+				"name": "block/amethyst_cluster/break4",
+				"volume": 1.0,
+				"pitch": 1.15
+			}
+		],
+		"subtitle": "subtitles.keeper_wisps.entity.wisp.death"
+	},
+	"entity.wisp.appear": {
+		"sounds": [
+			{
+				"name": "keeper_wisps:appear",
+				"volume": 0.4,
+				"pitch": 1.0
+			}
+		],
+		"subtitle": "subtitles.keeper_wisps.entity.wisp.appear"
+	}
+}
