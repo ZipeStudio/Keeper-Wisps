@@ -36,7 +36,7 @@
 
 !["Description" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSdescription.png?raw=true)
 
-Keeper Wisps adds cute creatures that guard your items and experience after you die.
+Keeper Wisps — Adds cute creatures that guard your items and experience after you die.
 
 ### Showcase
 <iframe width="100%" height="480" src="https://www.youtube.com/embed/ijWbbp_b0SQ" title="video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
