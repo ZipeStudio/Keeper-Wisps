@@ -37,8 +37,8 @@ public final class WispExperience {
 
 	public static int lastWispLevel() {
 		KeeperWispsConfig config = KeeperWispsConfig.getInstance();
-		int first = Math.max(1, config.getFirstWispLevel());
-		int step = Math.max(1, config.getLevelsPerWisp());
+		int first = Math.max(0, config.getFirstWispLevel());
+		int step = Math.max(0, config.getLevelsPerWisp());
 		return first + (InventoryRow.values().length - 1) * step;
 	}
 

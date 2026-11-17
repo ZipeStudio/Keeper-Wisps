@@ -149,10 +149,13 @@ public final class WispSpawner {
 
 	private static int wispCount(int experienceLevel) {
 		KeeperWispsConfig config = KeeperWispsConfig.getInstance();
-		int first = Math.max(1, config.getFirstWispLevel());
-		int step = Math.max(1, config.getLevelsPerWisp());
+		int first = Math.max(0, config.getFirstWispLevel());
+		int step = Math.max(0, config.getLevelsPerWisp());
 		if (experienceLevel < first) {
 			return 0;
+		}
+		if (step == 0) {
+			return InventoryRow.values().length;
 		}
 		return Math.min(InventoryRow.values().length, (experienceLevel - first) / step + 1);
 	}
