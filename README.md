@@ -92,6 +92,7 @@ Config file: `config/keeper_wisps.json5`
 - `excess_xp_refund` - how much of the experience above the last Wisp's level (12 by default) the Wisps keep, from `0.0` to `1.0` (default `0.1`)
 - `first_wisp_level` - level needed for the first Wisp (default `8`)
 - `levels_per_wisp` - extra levels needed for each next Wisp (default `1`)
+- `require_eye_contact` - whether the Wisp has to look back at you before you can take your items (default `true`)
 
 !["Support" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSsupport.png?raw=true)
 

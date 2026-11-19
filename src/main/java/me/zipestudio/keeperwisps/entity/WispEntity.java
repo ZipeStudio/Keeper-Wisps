@@ -224,10 +224,14 @@ public class WispEntity extends PathfinderMob {
 
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		if (!this.hasItems() || !this.eyeContact.isWispFacing(player)) {
+		if (!this.hasItems()) {
 			return InteractionResult.PASS;
 		}
-		if (!this.level().isClientSide()) {
+		if (this.level().isClientSide()) {
+			if (!this.isReady()) {
+				return InteractionResult.PASS;
+			}
+		} else {
 			if (!this.eyeContact.isHeldBy(player)) {
 				return InteractionResult.PASS;
 			}
@@ -278,6 +282,16 @@ public class WispEntity extends PathfinderMob {
 		return super.hurt(source, Float.MAX_VALUE);
 	}
 	*///?}
+
+	@Override
+	public boolean skipAttackInteraction(Entity attacker) {
+		if (!(attacker instanceof Player player) || player.isSpectator() || this.isDeadOrDying() || !(this.level() instanceof ServerLevel)) {
+			return true;
+		}
+		this.setHealth(0.0F);
+		this.die(this.damageSources().playerAttack(player));
+		return true;
+	}
 
 	@Override
 	public void handleDamageEvent(DamageSource source) {

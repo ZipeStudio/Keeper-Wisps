@@ -13,6 +13,7 @@ import me.zipestudio.keeperwisps.KeeperWisps;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.util.List;
 
 //? if fabric {
 import net.fabricmc.loader.api.FabricLoader;
@@ -29,11 +30,15 @@ public class KeeperWispsConfig {
 	private static final float DEFAULT_EXCESS_XP_REFUND = 0.10F;
 	private static final int DEFAULT_FIRST_WISP_LEVEL = 8;
 	private static final int DEFAULT_LEVELS_PER_WISP = 1;
+	private static final boolean DEFAULT_REQUIRE_EYE_CONTACT = true;
+
+	private static final List<String> KEYS = List.of("excess_xp_refund", "first_wisp_level", "levels_per_wisp", "require_eye_contact");
 
 	public static final Codec<KeeperWispsConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Codec.FLOAT.optionalFieldOf("excess_xp_refund", DEFAULT_EXCESS_XP_REFUND).forGetter(KeeperWispsConfig::getExcessXpRefund),
 			Codec.INT.optionalFieldOf("first_wisp_level", DEFAULT_FIRST_WISP_LEVEL).forGetter(KeeperWispsConfig::getFirstWispLevel),
-			Codec.INT.optionalFieldOf("levels_per_wisp", DEFAULT_LEVELS_PER_WISP).forGetter(KeeperWispsConfig::getLevelsPerWisp)
+			Codec.INT.optionalFieldOf("levels_per_wisp", DEFAULT_LEVELS_PER_WISP).forGetter(KeeperWispsConfig::getLevelsPerWisp),
+			Codec.BOOL.optionalFieldOf("require_eye_contact", DEFAULT_REQUIRE_EYE_CONTACT).forGetter(KeeperWispsConfig::isRequireEyeContact)
 	).apply(instance, KeeperWispsConfig::new));
 
 	private static final File CONFIG_FILE = getConfigDir().resolve(KeeperWisps.MOD_ID + ".json5").toFile();
@@ -43,6 +48,7 @@ public class KeeperWispsConfig {
 	private float excessXpRefund;
 	private int firstWispLevel;
 	private int levelsPerWisp;
+	private boolean requireEyeContact;
 
 	@SuppressWarnings("unused")
 	private KeeperWispsConfig() {
@@ -59,14 +65,19 @@ public class KeeperWispsConfig {
 
 	private static KeeperWispsConfig read() {
 		if (!CONFIG_FILE.exists()) {
-			writeDefault();
+			write(createDefault());
 		}
 		try (JsonReader reader = new JsonReader(Files.newBufferedReader(CONFIG_FILE.toPath(), StandardCharsets.UTF_8))) {
 			reader.setLenient(true);
 			JsonElement json = JsonParser.parseReader(reader);
-			return CODEC.parse(JsonOps.INSTANCE, json)
+			DataResult<KeeperWispsConfig> result = CODEC.parse(JsonOps.INSTANCE, json);
+			KeeperWispsConfig config = result
 					.resultOrPartial(error -> LOGGER.error("Failed to parse config: {}", error))
 					.orElseGet(KeeperWispsConfig::createDefault);
+			if (result.result().isPresent() && json.isJsonObject() && !json.getAsJsonObject().keySet().containsAll(KEYS)) {
+				write(config);
+			}
+			return config;
 		} catch (IOException | JsonParseException e) {
 			LOGGER.error("Failed to read config", e);
 			return createDefault();
@@ -74,7 +85,7 @@ public class KeeperWispsConfig {
 	}
 
 	private static KeeperWispsConfig createDefault() {
-		return new KeeperWispsConfig(DEFAULT_EXCESS_XP_REFUND, DEFAULT_FIRST_WISP_LEVEL, DEFAULT_LEVELS_PER_WISP);
+		return new KeeperWispsConfig(DEFAULT_EXCESS_XP_REFUND, DEFAULT_FIRST_WISP_LEVEL, DEFAULT_LEVELS_PER_WISP, DEFAULT_REQUIRE_EYE_CONTACT);
 	}
 
 	private static Path getConfigDir() {
@@ -85,35 +96,29 @@ public class KeeperWispsConfig {
 		*///?}
 	}
 
-	private static void writeDefault() {
+	private static void write(KeeperWispsConfig config) {
 		String text = """
-				// Keeper Wisps server config.
-				// Changes apply after restarting the server (or the game in singleplayer).
+				// Keeper Wisps config, changes apply after a restart.
+				// All options are described on the mod page.
 				{
-					// Share of the experience above the last Wisp's level (12 with the defaults)
-					// that goes into the Wisps.
-					// The vanilla amount always comes back (7 points per level, up to 100): part of it
-					// in the Wisps, the rest drops on the floor. Everything above the last Wisp's level
-					// is multiplied by this value and split evenly between the Wisps.
-					//   0.0  - everything above the last Wisp's level is lost
-					//   0.1  - default, 10%% of it comes back
-					//   1.0  - all of it comes back
-					// Range: 0.0 - 1.0
+					// Share of the experience above the last Wisp's level that the Wisps keep, from 0.0 to 1.0
 					"excess_xp_refund": %s,
 
-					// The level you need for the first Wisp to spawn.
+					// Level needed for the first Wisp
 					"first_wisp_level": %s,
 
-					// How many levels each Wisp after the first one costs. With the defaults the
-					// first Wisp needs 8 levels, the second 9, and the fifth 12.
-					"levels_per_wisp": %s
+					// Extra levels needed for each next Wisp
+					"levels_per_wisp": %s,
+
+					// Whether the Wisp has to look back at you before you can take your items
+					"require_eye_contact": %s
 				}
-				""".formatted(DEFAULT_EXCESS_XP_REFUND, DEFAULT_FIRST_WISP_LEVEL, DEFAULT_LEVELS_PER_WISP);
+				""".formatted(config.getExcessXpRefund(), config.getFirstWispLevel(), config.getLevelsPerWisp(), config.isRequireEyeContact());
 		try {
 			Files.createDirectories(CONFIG_FILE.toPath().getParent());
 			Files.writeString(CONFIG_FILE.toPath(), text, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			LOGGER.error("Failed to create config", e);
+			LOGGER.error("Failed to write config", e);
 		}
 	}
 
